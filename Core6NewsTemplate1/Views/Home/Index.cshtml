@@ -141,22 +141,23 @@
                             <a asp-action="Wall" asp-controller="BlogPosts">@Localizer["Top News (View All)"]</a>
                             <div class="nav-item dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">@Localizer["Categories"]</a>
-                                @if(culture.Name=="en"){
-                                <div class="dropdown-menu m-0">
-                                    @foreach (var item in ViewBag.Taxonomies)
-                                    {
-                                        <a asp-action="TaxonomyIndex" asp-controller="BlogPosts" asp-route-taxonomyid="@item.Id" class="dropdown-item">@item.EnName</a>
-                                    }
+                                @if (culture.Name == "en")
+                                {
+                                    <div class="dropdown-menu m-0">
+                                        @foreach (var item in ViewBag.Taxonomies)
+                                        {
+                                            <a asp-action="TaxonomyIndex" asp-controller="BlogPosts" asp-route-taxonomyid="@item.Id" class="dropdown-item">@item.EnName</a>
+                                        }
                                     </div>
                                 }
                                 else
                                 {
-                                <div class="dropdown-menu m-0">
-                                    @foreach (var item in ViewBag.Taxonomies)
-                                    {
-                                        <a asp-action="TaxonomyIndex" asp-controller="BlogPosts" asp-route-taxonomyid="@item.Id" class="dropdown-item">@item.Name</a>
-                                    }
-                                </div>
+                                    <div class="dropdown-menu m-0">
+                                        @foreach (var item in ViewBag.Taxonomies)
+                                        {
+                                            <a asp-action="TaxonomyIndex" asp-controller="BlogPosts" asp-route-taxonomyid="@item.Id" class="dropdown-item">@item.Name</a>
+                                        }
+                                    </div>
                                 }
                             </div>
 
@@ -178,7 +179,7 @@
                                     <div class="weekly2-caption">
                                         <span class="color1">@item.BlogTaxonomy.EnName</span>
                                         <p>@item.PostDateTime</p>
-                                        <h4><a asp-route-id="@item.Id" asp-action="Details" asp-controller="BlogPosts">@Common.substringc(item.EnTitle,0,50)</a></h4>
+                                        <h4><a asp-route-id="@item.Id" asp-action="Details" asp-controller="BlogPosts">@Common.substringc(item.EnTitle, 0, 50)</a></h4>
                                     </div>
                                 </div>
 
@@ -195,7 +196,7 @@
                                     <div class="weekly2-caption">
                                         <span class="color1">@item.BlogTaxonomy.Name</span>
                                         <p>@item.PostDateTime</p>
-                                        <h4><a asp-action="Details" asp-controller="BlogPosts" asp-route-id="@item.Id">@Common.substringc(item.Title,0,50)</a></h4>
+                                        <h4><a asp-action="Details" asp-controller="BlogPosts" asp-route-id="@item.Id">@Common.substringc(item.Title, 0, 50)</a></h4>
                                     </div>
                                 </div>
                             }
@@ -208,29 +209,32 @@
 </div>
 <!-- Blogs end -->
 <!-- Blogs end -->
-<!-- Causes Start -->
-<div class="container-xxl bg-light my-5 py-5">
-    <div class="container py-5">
-        <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
-            <div class="d-inline-block rounded-pill bg-secondary text-primary py-1 px-3 mb-3">@Localizer["Opended Projects"]</div>
-            <h1 class="display-6 mb-5">@Localizer["Our Projects"]</h1>
-        </div>
-        <div class="row g-4 justify-content-center">
-            @foreach (var item in ViewBag.CausesCategories)
-            {
-                @foreach (var cause in ((IEnumerable<dynamic>)ViewBag.Causes).Where(b => b.CauseCategoryId == item.Id).Take(1))
+@if (((IEnumerable<dynamic>)ViewBag.CausesCategories).Count() > 0)
+{
+    <!-- Causes Start -->
+
+    <div class="container-xxl bg-light my-5 py-5">
+        <div class="container py-5">
+            <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
+                <div class="d-inline-block rounded-pill bg-secondary text-primary py-1 px-3 mb-3">@Localizer["Opended Projects"]</div>
+                <h1 class="display-6 mb-5">@Localizer["Our Projects"]</h1>
+            </div>
+            <div class="row g-4 justify-content-center">
+                @foreach (var item in ViewBag.CausesCategories)
                 {
-                    @if (culture.Name == "en")
+                    @foreach (var cause in ((IEnumerable<dynamic>)ViewBag.Causes).Where(b => b.CauseCategoryId == item.Id).Take(1))
                     {
-                        <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                            <div class="causes-item d-flex flex-column bg-white border-top border-5 border-primary rounded-top overflow-hidden h-100">
-                                <div class="text-center p-4 pt-0">
-                                    <div class="d-inline-block bg-primary text-white rounded-bottom fs-5 pb-1 px-3 mb-4">
-                                        <small>@item.EnTitle</small>
-                                    </div>
-@*                                    <h5 class="mb-3">@cause.EnTitle</h5>
-*@                                    <p>@item.EnDescription</p>
-                                    @*<div class="causes-progress bg-light p-3 pt-2">
+                        @if (culture.Name == "en")
+                        {
+                            <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                                <div class="causes-item d-flex flex-column bg-white border-top border-5 border-primary rounded-top overflow-hidden h-100">
+                                    <div class="text-center p-4 pt-0">
+                                        <div class="d-inline-block bg-primary text-white rounded-bottom fs-5 pb-1 px-3 mb-4">
+                                            <small>@item.EnTitle</small>
+                                        </div>
+                                        @*                                    <h5 class="mb-3">@cause.EnTitle</h5>
+                        *@                                    <p>@item.EnDescription</p>
+                                        @*<div class="causes-progress bg-light p-3 pt-2">
                         <div class="d-flex justify-content-between">
                         <p class="text-dark">$10,000 <small class="text-body">Goal</small></p>
                         <p class="text-dark">$9,542 <small class="text-body">Raised</small></p>
@@ -241,32 +245,32 @@
                         </div>
                         </div>
                         </div>*@
-                                </div>
-                                <div class="position-relative mt-auto">
-                                    <img class="img-fluid" src="/Pictures/@item.Image" alt="">
-                                    <div class="causes-overlay">
-                                        <a class="btn btn-outline-primary" asp-action="Index" asp-controller="CauseCategories" asp-route-id="@cause.CauseCategoryId">
-                                            @Localizer["See All"]
-                                            <div class="d-inline-flex btn-sm-square bg-primary text-white rounded-circle ms-2">
-                                                <i class="fa fa-arrow-right"></i>
-                                            </div>
-                                        </a>
+                                    </div>
+                                    <div class="position-relative mt-auto">
+                                        <img class="img-fluid" src="/Pictures/@item.Image" alt="">
+                                        <div class="causes-overlay">
+                                            <a class="btn btn-outline-primary" asp-action="Index" asp-controller="CauseCategories" asp-route-id="@cause.CauseCategoryId">
+                                                @Localizer["See All"]
+                                                <div class="d-inline-flex btn-sm-square bg-primary text-white rounded-circle ms-2">
+                                                    <i class="fa fa-arrow-right"></i>
+                                                </div>
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    }
-                    else
-                    {
-                        <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                            <div class="causes-item d-flex flex-column bg-white border-top border-5 border-primary rounded-top overflow-hidden h-100">
-                                <div class="text-center p-4 pt-0">
-                                    <div class="d-inline-block bg-primary text-white rounded-bottom fs-5 pb-1 px-3 mb-4">
-                                        <small>@item.Title</small>
-                                    </div>
-                                    <h5 class="mb-3">@cause.Title</h5>
-                                    <p>@item.Description</p>
-                                    @*<div class="causes-progress bg-light p-3 pt-2">
+                        }
+                        else
+                        {
+                            <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                                <div class="causes-item d-flex flex-column bg-white border-top border-5 border-primary rounded-top overflow-hidden h-100">
+                                    <div class="text-center p-4 pt-0">
+                                        <div class="d-inline-block bg-primary text-white rounded-bottom fs-5 pb-1 px-3 mb-4">
+                                            <small>@item.Title</small>
+                                        </div>
+                                        <h5 class="mb-3">@cause.Title</h5>
+                                        <p>@item.Description</p>
+                                        @*<div class="causes-progress bg-light p-3 pt-2">
                         <div class="d-flex justify-content-between">
                         <p class="text-dark">$10,000 <small class="text-body">Goal</small></p>
                         <p class="text-dark">$9,542 <small class="text-body">Raised</small></p>
@@ -277,28 +281,29 @@
                         </div>
                         </div>
                         </div>*@
-                                </div>
-                                <div class="position-relative mt-auto">
-                                    <img class="img-fluid" src="/Pictures/@item.Image" alt="">
-                                    <div class="causes-overlay">
-                                        <a class="btn btn-outline-primary" asp-action="Index" asp-controller="CauseCategories" asp-route-id="@cause.CauseCategoryId">
-                                            @Localizer["See All"]
-                                            <div class="d-inline-flex btn-sm-square bg-primary text-white rounded-circle ms-2">
-                                                <i class="fa fa-arrow-right"></i>
-                                            </div>
-                                        </a>
+                                    </div>
+                                    <div class="position-relative mt-auto">
+                                        <img class="img-fluid" src="/Pictures/@item.Image" alt="">
+                                        <div class="causes-overlay">
+                                            <a class="btn btn-outline-primary" asp-action="Index" asp-controller="CauseCategories" asp-route-id="@cause.CauseCategoryId">
+                                                @Localizer["See All"]
+                                                <div class="d-inline-flex btn-sm-square bg-primary text-white rounded-circle ms-2">
+                                                    <i class="fa fa-arrow-right"></i>
+                                                </div>
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        }
                     }
                 }
-            }
 
+            </div>
         </div>
     </div>
-</div>
-<!-- Causes End -->
+    <!-- Causes End -->
+}
 <!-- Statictics start -->
 <div class="statictics  statictics-bg p-5">
     <div class="container">
@@ -344,7 +349,7 @@
                         <div class="service-item bg-white text-center h-100 p-4 p-xl-5">
                             <img class="img-fluid mb-4" src="/Pictures/@item.Image" alt="">
                             <h4 class="mb-3">@item.EnTitle</h4>
-                            <p class="mb-4">@Common.substringc(item.EnBriefDescription,0,20)</p>
+                            <p class="mb-4">@Common.substringc(item.EnBriefDescription, 0, 20)</p>
                             <a class="btn btn-outline-primary px-3" asp-action="Details" asp-controller="Services" asp-route-id="@item.Id">
                                 @Localizer["Know More"]
                                 <div class="d-inline-flex btn-sm-square bg-primary text-white rounded-circle ms-2">
@@ -361,7 +366,7 @@
                         <div class="service-item bg-white text-center h-100 p-4 p-xl-5">
                             <img class="img-fluid mb-4" src="/Pictures/@item.Image" alt="">
                             <h4 class="mb-3">@item.Title</h4>
-                            <p class="mb-4">@Common.substringc(item.BriefDescription,0,20)</p>
+                            <p class="mb-4">@Common.substringc(item.BriefDescription, 0, 20)</p>
                             <a class="btn btn-outline-primary px-3" asp-action="Details" asp-controller="Services" asp-route-id="@item.Id">
                                 @Localizer["Know More"]
                                 <div class="d-inline-flex btn-sm-square bg-primary text-white rounded-circle ms-2">
@@ -529,33 +534,36 @@
         </div>
     </div>
 }*@
-<div class="container-xxl py-5">
-    <div class="container">
-        <h2>
-            <div class="ticker d-flex flex-wrap justify-content-center align-items-center">
-@*                <strong>@Localizer["Our:"]</strong>
-*@                <ul>
-                    <li class="fw-bolder">@Localizer["Partners"]</li>
-                    <li class="fw-bolder">@Localizer["Donners"]</li>
-                </ul>
-            </div>
-        </h2>
-        <section class="customer-logos slider">
-            @foreach (var item in ViewBag.Testomonials)
-            {
-                <div class="slide"><img src="/Pictures/@item.Image"></div>
-            }
-        </section>
+@if (((IEnumerable<dynamic>)ViewBag.Testomonials).Count() > 0)
+{
+    <div class="container-xxl py-5">
+        <div class="container">
+            <h2>
+                <div class="ticker d-flex flex-wrap justify-content-center align-items-center">
+                    @*                <strong>@Localizer["Our:"]</strong>
+                *@                <ul>
+                        <li class="fw-bolder">@Localizer["Partners"]</li>
+                        <li class="fw-bolder">@Localizer["Donners"]</li>
+                    </ul>
+                </div>
+            </h2>
+            <section class="customer-logos slider">
+                @foreach (var item in ViewBag.Testomonials)
+                {
+                    <div class="slide"><img src="/Pictures/@item.Image"></div>
+                }
+            </section>
+        </div>
     </div>
-</div>
+}
 <!-- Testimonial End -->
-@section scripts{
+@section scripts {
     <script>
         $(".carousel-item").first().addClass("active");
     </script>
     <script src="/js/jquery.ticker.js"></script>
     <script>
-        $(function() {
+        $(function () {
             $('.ticker').ticker();
         });
     </script>
