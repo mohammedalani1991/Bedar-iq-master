@@ -175,7 +175,7 @@
         margin-right: 10px;
         cursor: pointer;
         border-radius: 50%;
-        background: #d6d6d6
+        background: #4caf50
     }
 
 .weekly2-news-area .weekly2-wrapper .dot-style .slider-active.dot-style .slick-dots button {
@@ -196,7 +196,7 @@
 }
 
 .weekly2-news-area .weekly2-wrapper .dot-style .slick-active button {
-    background: #154273;
+    background: #4caf50;
     height: 9px;
     width: 38px;
     border-radius: 10px

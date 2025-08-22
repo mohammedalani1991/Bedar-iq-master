@@ -62,7 +62,17 @@
                             <div>
                                 <h3 class="mb-3">@Model.BlogPost.EnTitle</h3>
                                 <p>
-                                    @Html.Raw(Model.BlogPost.EnBody);
+                                    @Html.Raw(Model.BlogPost.EnIntroduction)
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="overlay position-relative bg-light">
+
+                            <div>
+@*                                 <h3 class="mb-3">@Model.BlogPost.EnTitle</h3>
+ *@                                <p>
+                                    @Html.Raw(Model.BlogPost.EnBody)
                                 </p>
                             </div>
                         </div>
@@ -74,7 +84,17 @@
                             <div>
                                 <h3 class="mb-3">@Model.BlogPost.Title</h3>
                                 <p>
-                                    @Html.Raw(Model.BlogPost.Body);
+                                    @Html.Raw(Model.BlogPost.Introduction)
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="overlay position-relative bg-light">
+
+                            <div>
+@*                                 <h3 class="mb-3">@Model.BlogPost.Title</h3>
+ *@                                <p>
+                                    @Html.Raw(Model.BlogPost.Body)
                                 </p>
                             </div>
                         </div>
@@ -164,7 +184,7 @@
                                         <span class="px-1">/</span>
                                         <span>@item.PostDateTime.ToShortDateString()</span>
                                     </div>
-                                    <a class="h6 m-0" asp-action="Details" asp-controller="BlogPosts" asp-route-id="@item.Id">@Common.substringc(item.EnTitle,0,50)</a>
+                                    <a class="h6 m-0" asp-action="Details" asp-controller="BlogPosts" asp-route-id="@item.Id">@Common.substringc(item.EnTitle, 0, 50)</a>
                                 </div>
                             </div>
                         }
@@ -181,7 +201,7 @@
                                         <span class="px-1">/</span>
                                         <span>@item.PostDateTime.ToShortDateString()</span>
                                     </div>
-                                    <a class="h6 m-0" asp-action="Details" asp-controller="BlogPosts" asp-route-id="@item.Id">@Common.substringc(item.Title,0,50)</a>
+                                    <a class="h6 m-0" asp-action="Details" asp-controller="BlogPosts" asp-route-id="@item.Id">@Common.substringc(item.Title, 0, 50)</a>
                                 </div>
                             </div>
                         }
@@ -239,13 +259,16 @@
 
 <div id="example1"></div>
 <style>
-    .pdfobject-container { height: 30rem; border: 1rem solid rgba(0,0,0,.1); }
+    .pdfobject-container {
+        height: 30rem;
+        border: 1rem solid rgba(0,0,0,.1);
+    }
 </style>
-@section scripts{
+@section scripts {
     @if (Model.BlogPost.IsPdf)
     {
         <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.2.8/pdfobject.min.js"></script>
-        <script>PDFObject.embed("/Files/"+$("#pdffile").html(), "#example1");</script>
+        <script>PDFObject.embed("/Files/" + $("#pdffile").html(), "#example1");</script>
     }
     <script type="text/javascript" src="http://github.com/malsup/media/raw/master/jquery.media.js?v0.92"></script>
     <script type="text/javascript" src="/js/jquery.media.js"></script>
@@ -258,7 +281,7 @@
         $('a.media').media({ width: 400, height: 300, autoplay: true });
     </script>
     <script>
-        $(".slider-img").click(function() {
+        $(".slider-img").click(function () {
             $("#model-img").attr("src", $(this).attr("src"));
             $("#slider-img-modal").modal("show");
         });
@@ -330,8 +353,8 @@
         </script>
     }
     <script>
-        $(document).ready(function() {
-            $('.youtube').html(function(i, v) {
+        $(document).ready(function () {
+            $('.youtube').html(function (i, v) {
                 // check for an instance of 'watch?v='
                 if (v.indexOf('watch?v=') !== -1) {
                     var id = v.split('watch?v=')[1]; // get the id so you can add to iframe
@@ -343,4 +366,4 @@
             });
         });
     </script>
-    }
+}

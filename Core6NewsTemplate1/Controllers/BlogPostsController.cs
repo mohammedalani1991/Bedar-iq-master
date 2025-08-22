@@ -33,20 +33,34 @@ namespace WebOS.Controllers
 
         // GET: BlogPosts
         [Authorize(Roles = RoleName.Admins)]
-        public IActionResult Index(int? page)
+        public async Task<IActionResult> Index(int? page)
         {
-            var pagenumber = page ?? 1;
-            var blogposts = _context.BlogPost.Include(b => b.ApplicationUser).Include(b => b.BlogTaxonomy).OrderByDescending(b => b.PostDateTime).OrderByDescending(b => b.PostDateTime);
-            BlogViewModel blogVM = new BlogViewModel()
-            {
-                BlogPosts = _context.BlogPost.Include(b => b.BlogTaxonomy).OrderByDescending(b => b.PostDateTime),
-                BlogTaxonomies = _context.BlogTaxonomy.Where(b => b.Sub == 0),
+            int pagenumber = page ?? 1;
 
-            };
-            var onePageOfBlogPosts = blogposts.ToPagedList(pagenumber, 20);
+            // Load all posts (with related ApplicationUser and BlogTaxonomy) into memory
+            var allBlogPosts = await _context.BlogPost
+                .Include(b => b.ApplicationUser)
+                .Include(b => b.BlogTaxonomy)
+                .AsNoTracking()                          // read-only -> slightly faster, avoids tracking
+                .OrderByDescending(b => b.PostDateTime) // single ordering
+                .ToListAsync();
+
+            // Create the paged list from the in-memory list
+            var onePageOfBlogPosts = allBlogPosts.ToPagedList(pagenumber, 20);
             ViewBag.onePageOfBlogPosts = onePageOfBlogPosts;
 
-            //var applicationDbContext = _context.BlogPost.Include(b => b.ApplicationUser).Include(b => b.BlogTaxonomy);
+            // Load taxonomies (materialized)
+            var blogTaxonomies = await _context.BlogTaxonomy
+                .Where(b => b.Sub == 0)
+                .AsNoTracking()
+                .ToListAsync();
+
+            var blogVM = new BlogViewModel
+            {
+                BlogPosts = allBlogPosts,   // in-memory list -> view won't hit DB again
+                BlogTaxonomies = blogTaxonomies
+            };
+
             return View(blogVM);
         }
         public IActionResult Search(int? page, string q)

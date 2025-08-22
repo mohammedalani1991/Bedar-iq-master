@@ -1,148 +1,262 @@
 ﻿@model WebOS.Models.BlogPost
-
 @{
     ViewData["Title"] = "التعديل على " + Model.Title;
 }
-
 <partial name="_ViewHeader" />
 <div class="container">
-<h4>التعديل على "@Model.Title"</h4>
-<hr />
-<div class="row">
-    <div class="col-md-8">
-        <form asp-action="Edit" enctype="multipart/form-data">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
-            <div class="mb-3">
-                <label asp-for="Title" class="control-label"></label>
-                <input asp-for="Title" class="form-control" />
-                <span asp-validation-for="Title" class="text-danger"></span>
-            </div>
-            <div class="mb-3">
-                <label asp-for="EnTitle" class="control-label"></label>
+    <h4>التعديل على "@Model.Title"</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-8">
+            <form asp-action="Edit" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Id" />
+                <div class="mb-3">
+                    <label asp-for="Title" class="control-label"></label>
+                    <input asp-for="Title" class="form-control" />
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="EnTitle" class="control-label"></label>
                     <input style="direction:ltr" asp-for="EnTitle" class="form-control" />
-                <span asp-validation-for="EnTitle" class="text-danger"></span>
-            </div>
+                    <span asp-validation-for="EnTitle" class="text-danger"></span>
+                </div>
                 <div class="mb-3">
                     <label asp-for="Introduction" class="control-label"></label>
-                    <textarea asp-for="Introduction" class="form-control"></textarea>
+                    <div id="introduction-editor" style="height: 150px;"></div>
+                    <textarea asp-for="Introduction" class="form-control" style="display: none;"></textarea>
                     <span asp-validation-for="Introduction" class="text-danger"></span>
                 </div>
                 <div class="mb-3">
                     <label asp-for="EnIntroduction" class="control-label"></label>
-                    <textarea style="direction:ltr" asp-for="EnIntroduction" class="form-control"></textarea>
+                    <div id="en-introduction-editor" style="height: 150px; direction: ltr;"></div>
+                    <textarea style="direction:ltr; display: none;" asp-for="EnIntroduction" class="form-control"></textarea>
                     <span asp-validation-for="EnIntroduction" class="text-danger"></span>
                 </div>
-            <div class="mb-3">
-                <label asp-for="Body" class="control-label"></label>
-                <textarea rows="10" asp-for="Body" class="form-control"></textarea>
-                <span asp-validation-for="Body" class="text-danger"></span>
-            </div>
-            <div class="mb-3">
-                <label asp-for="EnBody" class="control-label"></label>
-                <textarea style="direction:ltr" rows="10" asp-for="EnBody" class="form-control"></textarea>
-                <span asp-validation-for="EnBody" class="text-danger"></span>
-            </div>
-           
-            <div class="mb-3">
-                <label asp-for="PostDateTime" class="control-label"></label>
-                <input asp-for="PostDateTime" class="form-control" />
-                <span asp-validation-for="PostDateTime" class="text-danger"></span>
-            </div>
-         @*   <div class="mb-3">
+                <div class="mb-3">
+                    <label asp-for="Body" class="control-label"></label>
+                    <div id="body-editor" style="height: 300px;"></div>
+                    <textarea rows="10" asp-for="Body" class="form-control" style="display: none;"></textarea>
+                    <span asp-validation-for="Body" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="EnBody" class="control-label"></label>
+                    <div id="en-body-editor" style="height: 300px; direction: ltr;"></div>
+                    <textarea style="direction:ltr; display: none;" rows="10" asp-for="EnBody" class="form-control"></textarea>
+                    <span asp-validation-for="EnBody" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="PostDateTime" class="control-label"></label>
+                    <input asp-for="PostDateTime" class="form-control" />
+                    <span asp-validation-for="PostDateTime" class="text-danger"></span>
+                </div>
+                @*   <div class="mb-3">
                 <label asp-for="DateModified" class="control-label"></label>
                 <input asp-for="DateModified" class="form-control" />
                 <span asp-validation-for="DateModified" class="text-danger"></span>
-            </div>*@
-            <div class="mb-3" id="img">
-                <label asp-for="Image" class="control-label"></label>*<br />
-                <img width="400" height="300" id="img1" class="rounded img-fluid m-2" src="~/images/@Model.Image" />
-                <input type="file" name="myfile" id="file" accept=".png,.jpg,.jpeg,.gif,.tif" class="btn btn-info col-lg-12 input-sm" />
-                <input placeholder="هذا الحقل ضروري" readonly asp-for="Image" id="fileinput" class="form-control input-sm" />
-                <span asp-validation-for="Image" class="text-danger"></span>
-            </div>
-            <div class="mb-3">
-                <label asp-for="Source" class="control-label"></label>
-                <input asp-for="Source" class="form-control" />
-                <span asp-validation-for="Source" class="text-danger"></span>
-            </div>
-            <div class="mb-3" hidden>
-                <label asp-for="YouTube" class="control-label"></label>
-                <input asp-for="YouTube" class="form-control" />
-                <span asp-validation-for="YouTube" class="text-danger"></span>
-            </div>
-            <div class="mb-3">
-                <label asp-for="EnSource" class="control-label"></label>
+                </div>*@
+                <div class="mb-3" id="img">
+                    <label asp-for="Image" class="control-label"></label>*<br />
+                    <img width="400" height="300" id="img1" class="rounded img-fluid m-2" src="~/images/@Model.Image" />
+                    <input type="file" name="myfile" id="file" accept=".png,.jpg,.jpeg,.gif,.tif" class="btn btn-info col-lg-12 input-sm" />
+                    <input placeholder="هذا الحقل ضروري" readonly asp-for="Image" id="fileinput" class="form-control input-sm" />
+                    <span asp-validation-for="Image" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Source" class="control-label"></label>
+                    <input asp-for="Source" class="form-control" />
+                    <span asp-validation-for="Source" class="text-danger"></span>
+                </div>
+                <div class="mb-3" hidden>
+                    <label asp-for="YouTube" class="control-label"></label>
+                    <input asp-for="YouTube" class="form-control" />
+                    <span asp-validation-for="YouTube" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="EnSource" class="control-label"></label>
                     <input style="direction:ltr" asp-for="EnSource" class="form-control" />
-                <span asp-validation-for="EnSource" class="text-danger"></span>
-            </div>
-            <div class="mb-3" id="fileform">
-                <label asp-for="File" class="control-label"></label><br />
-                <a href="~/Files/@Model.File">الملف الحالي</a>
-                <input type="file" name="myfile1" id="file1" accept=".pdf,.doc" class="btn btn-info col-lg-12 input-sm" />
-                <input readonly placeholder="هذا الحقل إختياري" asp-for="File" id="fileinput1" class="form-control input-sm" />
-                <span asp-validation-for="File" class="text-danger"></span>
-            </div>
-            <div class="mb-3">
-                <label asp-for="Reads" class="control-label"></label>
-                <input disabled asp-for="Reads" class="form-control" />
-                <span asp-validation-for="Reads" class="text-danger"></span>
-            </div>
-            <div class="mb-3">
-                <label asp-for="ApplicationUserId" class="control-label"></label>
-                <select asp-for="ApplicationUserId" asp-items="ViewBag.ApplicationUserId" class="form-control"></select>
-                <span asp-validation-for="ApplicationUserId" class="text-danger"></span>
-            </div>
-            <div class="mb-3">
-                <label asp-for="Tags" class="control-label"></label>
-                <input asp-for="Tags" class="form-control" />
-                <span asp-validation-for="Tags" class="text-danger"></span>
-            </div>
-            <div class="mb-3">
-                <label asp-for="EnTags" class="control-label"></label>
+                    <span asp-validation-for="EnSource" class="text-danger"></span>
+                </div>
+                <div class="mb-3" id="fileform">
+                    <label asp-for="File" class="control-label"></label><br />
+                    <a href="~/Files/@Model.File">الملف الحالي</a>
+                    <input type="file" name="myfile1" id="file1" accept=".pdf,.doc" class="btn btn-info col-lg-12 input-sm" />
+                    <input readonly placeholder="هذا الحقل إختياري" asp-for="File" id="fileinput1" class="form-control input-sm" />
+                    <span asp-validation-for="File" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Reads" class="control-label"></label>
+                    <input disabled asp-for="Reads" class="form-control" />
+                    <span asp-validation-for="Reads" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="ApplicationUserId" class="control-label"></label>
+                    <select asp-for="ApplicationUserId" asp-items="ViewBag.ApplicationUserId" class="form-control"></select>
+                    <span asp-validation-for="ApplicationUserId" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Tags" class="control-label"></label>
+                    <input asp-for="Tags" class="form-control" />
+                    <span asp-validation-for="Tags" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="EnTags" class="control-label"></label>
                     <input style="direction:ltr" asp-for="EnTags" class="form-control" />
-                <span asp-validation-for="EnTags" class="text-danger"></span>
-            </div>
-            <div class="mb-3">
-                <label class="control-label col-lg-6">القسم الرئيسي</label>
-                <select id="main" name="taxonomyvalue" class="form-control" asp-items="ViewBag.BlogTaxonomyId"></select>
-            </div>
-            <div class="mb-3" id="subfield">
-                <label class="control-label col-lg-6">القسم الفرعي</label>
-                <select asp-items="ViewBag.BlogTaxonomysubId" id="sub" name="subvalue" class="form-control"><option>إختر قسم رئيسي أولاً</option></select>
-            </div>
-            <div class="mb-3 form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="IsHidden" /> @Html.DisplayNameFor(model => model.IsHidden)
-                </label>
-            </div>
-            <div class="mb-3 form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="IsFeatured" /> @Html.DisplayNameFor(model => model.IsFeatured)
-                </label>
-            </div>
-            <div class="mb-3 form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="IsPdf" /> @Html.DisplayNameFor(model => model.IsPdf)
-                </label>
-            </div>
-            <div class="mb-3 form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="IsDeleted" /> @Html.DisplayNameFor(model => model.IsDeleted)
-                </label>
-            </div>
-
-            <div class="mb-3">
-                <input type="submit" value="حفظ" class="btn btn-success rounded-0" />
-                <a class="btn btn-primary rounded-0" asp-action="Index">رجوع</a>
-            </div>
-        </form>
+                    <span asp-validation-for="EnTags" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label class="control-label col-lg-6">القسم الرئيسي</label>
+                    <select id="main" name="taxonomyvalue" class="form-control" asp-items="ViewBag.BlogTaxonomyId"></select>
+                </div>
+                <div class="mb-3" id="subfield">
+                    <label class="control-label col-lg-6">القسم الفرعي</label>
+                    <select asp-items="ViewBag.BlogTaxonomysubId" id="sub" name="subvalue" class="form-control"><option>إختر قسم رئيسي أولاً</option></select>
+                </div>
+                <div class="mb-3 form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="IsHidden" /> @Html.DisplayNameFor(model => model.IsHidden)
+                    </label>
+                </div>
+                <div class="mb-3 form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="IsFeatured" /> @Html.DisplayNameFor(model => model.IsFeatured)
+                    </label>
+                </div>
+                <div class="mb-3 form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="IsPdf" /> @Html.DisplayNameFor(model => model.IsPdf)
+                    </label>
+                </div>
+                <div class="mb-3 form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="IsDeleted" /> @Html.DisplayNameFor(model => model.IsDeleted)
+                    </label>
+                </div>
+                <div class="mb-3">
+                    <input type="submit" value="حفظ" class="btn btn-success rounded-0" />
+                    <a class="btn btn-primary rounded-0" asp-action="Index">رجوع</a>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
-</div>
-
 
 @section Scripts {
+    <!-- Include Quill.js CSS and JS -->
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            // Initialize Quill editors
+            var introductionQuill = new Quill('#introduction-editor', {
+                theme: 'snow',
+                direction: 'rtl',
+                modules: {
+                    toolbar: [
+                        [{ 'header': [1, 2, 3, false] }],
+                        ['bold', 'italic', 'underline', 'strike'],
+                        [{ 'color': [] }, { 'background': [] }],
+                        [{ 'align': [] }],
+                        ['link', 'image'],
+                        [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                        ['clean']
+                    ]
+                }
+            });
+
+            var enIntroductionQuill = new Quill('#en-introduction-editor', {
+                theme: 'snow',
+                direction: 'ltr',
+                modules: {
+                    toolbar: [
+                        [{ 'header': [1, 2, 3, false] }],
+                        ['bold', 'italic', 'underline', 'strike'],
+                        [{ 'color': [] }, { 'background': [] }],
+                        [{ 'align': [] }],
+                        ['link', 'image'],
+                        [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                        ['clean']
+                    ]
+                }
+            });
+
+            var bodyQuill = new Quill('#body-editor', {
+                theme: 'snow',
+                direction: 'rtl',
+                modules: {
+                    toolbar: [
+                        [{ 'header': [1, 2, 3, false] }],
+                        ['bold', 'italic', 'underline', 'strike'],
+                        [{ 'color': [] }, { 'background': [] }],
+                        [{ 'align': [] }],
+                        ['link', 'image', 'video'],
+                        [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                        ['blockquote', 'code-block'],
+                        ['clean']
+                    ]
+                }
+            });
+
+            var enBodyQuill = new Quill('#en-body-editor', {
+                theme: 'snow',
+                direction: 'ltr',
+                modules: {
+                    toolbar: [
+                        [{ 'header': [1, 2, 3, false] }],
+                        ['bold', 'italic', 'underline', 'strike'],
+                        [{ 'color': [] }, { 'background': [] }],
+                        [{ 'align': [] }],
+                        ['link', 'image', 'video'],
+                        [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                        ['blockquote', 'code-block'],
+                        ['clean']
+                    ]
+                }
+            });
+
+            // Set initial content from existing model data
+            if ($('[name="Introduction"]').val()) {
+                introductionQuill.root.innerHTML = $('[name="Introduction"]').val();
+            }
+            if ($('[name="EnIntroduction"]').val()) {
+                enIntroductionQuill.root.innerHTML = $('[name="EnIntroduction"]').val();
+            }
+            if ($('[name="Body"]').val()) {
+                bodyQuill.root.innerHTML = $('[name="Body"]').val();
+            }
+            if ($('[name="EnBody"]').val()) {
+                enBodyQuill.root.innerHTML = $('[name="EnBody"]').val();
+            }
+
+            // Update hidden textareas on content change
+            introductionQuill.on('text-change', function () {
+                $('[name="Introduction"]').val(introductionQuill.root.innerHTML);
+            });
+
+            enIntroductionQuill.on('text-change', function () {
+                $('[name="EnIntroduction"]').val(enIntroductionQuill.root.innerHTML);
+            });
+
+            bodyQuill.on('text-change', function () {
+                $('[name="Body"]').val(bodyQuill.root.innerHTML);
+            });
+
+            enBodyQuill.on('text-change', function () {
+                $('[name="EnBody"]').val(enBodyQuill.root.innerHTML);
+            });
+
+            // Update hidden textareas before form submission
+            $('form').on('submit', function () {
+                $('[name="Introduction"]').val(introductionQuill.root.innerHTML);
+                $('[name="EnIntroduction"]').val(enIntroductionQuill.root.innerHTML);
+                $('[name="Body"]').val(bodyQuill.root.innerHTML);
+                $('[name="EnBody"]').val(enBodyQuill.root.innerHTML);
+            });
+        });
+    </script>
+
     <script>
         $(document).ready(function () {
             // $("#ctyid").prop("disabled", true);
@@ -150,9 +264,7 @@
                 //  $("#ctyid").prop("disabled", true);
                 $("#sub").empty();
                 var _url = '@Url.Action("GetSubList", "Home")';
-
-                if ($("#main").val() > 0)
-                {
+                if ($("#main").val() > 0) {
                     var CountryOptions = {};
                     CountryOptions.url = _url;
                     CountryOptions.data = { mainid: $("#main").val() };
@@ -175,8 +287,6 @@
             });
         });
     </script>
-
-
     <script>
         $(document).ready(function () {
             $("#file").change(function () {
@@ -201,26 +311,8 @@
             });
         });
     </script>
-    <script>
-        tinymce.init({
-            selector: 'textarea',
-            content_style: "div, p {font-size: 18px;}",
-            directionality: 'rtl',
-            //language: 'ar_SA',
-            plugins: "link,image,media,table",
 
-            menubar: "insert",
-            toolbar: "link,image,media,table",
-            relative_urls: false,
-            remove_script_host: false,
-            convert_urls: true,
-            toolbar: true,
-            menubar: true,
-            mode: "textareas"
-            //plugins: "table,contextmenu,paste,-externalplugin"
-        });
-    </script>
-
-
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

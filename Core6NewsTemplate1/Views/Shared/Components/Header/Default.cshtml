@@ -7,7 +7,7 @@
 @if (@Model.SystemSettings != null)
 {
     <div class="top-bar text-white-50 row gx-0 align-items-center d-none d-lg-flex">
-        <div class="col-lg-6 px-5 text-end d-flex align-items-center">
+        <div class="col-lg-6 px-5 text-start d-flex align-items-center">
             <small>
                 <i class="fa fa-map-marker-alt me-2"></i>@if (culture.Name == "en")
                 {
@@ -30,7 +30,7 @@
                 </form>
             }
         </div>
-        <div class="col-lg-6 px-5 text-start">
+        <div class="col-lg-6 px-5 text-end">
             <small>@Localizer["Follow Us"]:</small>
             @if (Model.SystemSettings.FB != null)
             {
